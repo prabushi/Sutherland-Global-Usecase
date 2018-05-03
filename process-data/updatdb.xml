@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="updatdb">
+   <log>
+      <property name="Message" value="Add user info to DB !"/>
+   </log>
+   <log level="full"/>
+   <payloadFactory media-type="xml">
+      <format>
+         <p:add-user_operation xmlns:p="SampleDS1_NS">
+            <xs:username xmlns:xs="SampleDS1_NS">$1</xs:username>
+            <xs:name xmlns:xs="SampleDS1_NS">$2</xs:name>
+            <xs:lastname xmlns:xs="SampleDS1_NS">$3</xs:lastname>
+            <xs:email xmlns:xs="SampleDS1_NS">$4</xs:email>
+            <xs:profileid xmlns:xs="SampleDS1_NS">$5</xs:profileid>
+         </p:add-user_operation>
+      </format>
+      <args>
+         <arg xmlns:sf="urn:sobject.partner.soap.sforce.com"
+              xmlns:ns="http://org.apache.synapse/xsd"
+              evaluator="xml"
+              expression="//sf:Username/text()"/>
+         <arg xmlns:sf="urn:sobject.partner.soap.sforce.com"
+              xmlns:ns="http://org.apache.synapse/xsd"
+              evaluator="xml"
+              expression="//sf:Name/text()"/>
+         <arg xmlns:sf="urn:sobject.partner.soap.sforce.com"
+              xmlns:ns="http://org.apache.synapse/xsd"
+              evaluator="xml"
+              expression="//sf:LastName/text()"/>
+         <arg xmlns:sf="urn:sobject.partner.soap.sforce.com"
+              xmlns:ns="http://org.apache.synapse/xsd"
+              evaluator="xml"
+              expression="//sf:Email/text()"/>
+         <arg xmlns:sf="urn:sobject.partner.soap.sforce.com"
+              xmlns:ns="http://org.apache.synapse/xsd"
+              evaluator="xml"
+              expression="//sf:ProfileId/text()"/>
+      </args>
+   </payloadFactory>
+   <call>
+      <endpoint>
+         <http method="POST"
+               uri-template="http://localhost:8280/services/SampleDS1.SOAP12Endpoint/add-user_operation"/>
+      </endpoint>
+   </call>
+</sequence>

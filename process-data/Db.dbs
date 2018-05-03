@@ -1,0 +1,26 @@
+<data enableBatchRequests="true" name="SampleDS1" serviceNamespace="SampleDS1_NS" transports="http https local">
+   <config enableOData="true" id="sampledb1">
+      <property name="driverClassName">com.mysql.jdbc.Driver</property>
+      <property name="url">jdbc:mysql://localhost:3306/sample_db</property>
+      <property name="username">root</property>
+      <property name="password">123</property>
+   </config>
+   <query id="add-use" useConfig="sampledb1">
+      <sql>INSERT INTO User (username, name, lastname, email, profileid) values (?, ?, ?, ?, ?)</sql>
+      <param name="username" sqlType="STRING"/>
+      <param name="name" sqlType="STRING"/>
+      <param name="lastname" sqlType="STRING"/>
+      <param name="email" sqlType="STRING"/>
+      <param name="profileid" sqlType="STRING"/>
+   </query>
+   <operation name="add-user_operation">
+      <call-query href="add-use">
+         <with-param name="username" query-param="username"/>
+         <with-param name="name" query-param="name"/>
+         <with-param name="lastname" query-param="lastname"/>
+         <with-param name="email" query-param="email"/>
+         <with-param name="profileid" query-param="profileid"/>
+      </call-query>
+   </operation>
+</data>
+

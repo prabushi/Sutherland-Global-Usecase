@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="sendmail">
+   <log level="custom">
+      <property name="Message" value="Send mail !"/>
+   </log>
+   <property name="messageType" value="text/html" scope="axis2"/>
+   <property name="ContentType" value="text/html" scope="axis2"/>
+   <property name="Subject"
+             value="Notification: Process complete !!"
+             scope="transport"/>
+   <property name="OUT_ONLY" value="true"/>
+   <send>
+      <endpoint name="FileEpr">
+         <address uri="mailto:prabushinirmala@gmail.com"/>
+      </endpoint>
+   </send>
+</sequence>

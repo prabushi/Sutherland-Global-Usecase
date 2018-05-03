@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="ProcessInfoProxy"
+       transports="vfs"
+       startOnLoad="true">
+   <description/>
+   <target>
+      <inSequence>
+         <log level="custom">
+            <property name="Message" value="Process Information !!"/>
+         </log>
+         <log level="full"/>
+         <clone>
+            <target sequence="updatdb"/>
+            <target sequence="sendmail"/>
+         </clone>
+      </inSequence>
+   </target>
+   <parameter name="transport.PollInterval">15</parameter>
+   <parameter name="transport.vfs.FileURI">file:///home/prabushi/test/out</parameter>
+   <parameter name="transport.vfs.ContentType">text/xml</parameter>
+   <parameter name="transport.vfs.ActionAfterProcess">MOVE</parameter>
+   <parameter name="transport.vfs.MoveAfterFailure">file:///home/praushi/test/original</parameter>
+   <parameter name="transport.vfs.ActionAfterFailure">MOVE</parameter>
+   <parameter name="transport.vfs.FileNamePattern">.*\.xml</parameter>
+   <parameter name="transport.vfs.MoveAfterProcess">file:///home/prabushi/test/original</parameter>
+</proxy>
