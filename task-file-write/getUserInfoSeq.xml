@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="getUserInfoSeq">
+   <log level="custom">
+      <property name="Message" value="Get user Information !!"/>
+   </log>
+   <salesforce.getUserInfo configKey="MySFConfig"/>
+   <property name="SFQuery"
+             value="Select u.Username, u.ProfileId, u.Name, u.LastName, u.Email From User u where Username = 'prabushis@wso2.com'"
+             scope="default"
+             type="STRING"/>
+   <salesforce.query configKey="MySFConfig">
+      <batchSize>1</batchSize>
+      <queryString>{$ctx:SFQuery}</queryString>
+   </salesforce.query>
+   <property name="transport.vfs.ReplyFileName"
+             value="out.xml"
+             scope="transport"/>
+   <property name="OUT_ONLY" value="true"/>
+   <send>
+      <endpoint name="FileEpr">
+         <address uri="vfs:file:///home/prabushi/test/out"/>
+      </endpoint>
+   </send>
+</sequence>
