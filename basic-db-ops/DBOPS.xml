@@ -1,0 +1,55 @@
+<api xmlns="http://ws.apache.org/ns/synapse" name="DBOPS" context="/dbops">
+   <resource methods="GET" uri-template="/select">
+      <inSequence>
+         <log level="custom">
+            <property name="Message" value="SELECT - Retrieve Data from DB"/>
+         </log>
+         <call>
+            <endpoint>
+               <http method="GET" uri-template="http://localhost:8280/services/SampleDS.SOAP12Endpoint/select-info_operation"/>
+            </endpoint>
+         </call>
+         <send/>
+      </inSequence>
+   </resource>
+   <resource methods="POST" uri-template="/insert">
+      <inSequence>
+         <log level="custom">
+            <property name="Message" value="INSERT - Insert data into DB"/>
+         </log>
+         <call>
+            <endpoint>
+               <http method="POST" uri-template="http://localhost:8280/services/SampleDS.SOAP12Endpoint/insert-info_operation"/>
+            </endpoint>
+         </call>
+         <send/>
+      </inSequence>
+   </resource>
+   <resource methods="POST" uri-template="/update">
+      <inSequence>
+         <log level="custom">
+            <property name="Message" value="UPDATE - Update data in DB"/>
+         </log>
+         <call>
+            <endpoint>
+               <http method="POST" uri-template="http://localhost:8280/services/SampleDS.SOAP12Endpoint/update-info_operation"/>
+            </endpoint>
+         </call>
+         <send/>
+      </inSequence>
+   </resource>
+   <resource methods="POST" uri-template="/delete">
+      <inSequence>
+         <log level="custom">
+            <property name="Message" value="DELETE - Delete data from DB"/>
+         </log>
+         <call>
+            <endpoint>
+               <http method="POST" uri-template="http://localhost:8280/services/SampleDS.SOAP12Endpoint/delete-info_operation"/>
+            </endpoint>
+         </call>
+         <send/>
+      </inSequence>
+   </resource>
+</api>
+                        

@@ -1,0 +1,60 @@
+<data enableBatchRequests="true" name="SampleDS" serviceNamespace="SampleDS_NS" transports="http https local">
+   <config enableOData="true" id="sampledb">
+      <property name="driverClassName">com.mysql.jdbc.Driver</property>
+      <property name="url">jdbc:mysql://localhost:3306/sample_db</property>
+      <property name="username">root</property>
+      <property name="password">123</property>
+   </config>
+   <query id="select-info" useConfig="sampledb">
+      <sql>select * from Order_Info</sql>
+      <result element="Entries" rowName="Entry">
+         <element column="customer_id" name="customer_id" xsdType="integer"/>
+         <element column="order_id" name="order_id" xsdType="integer"/>
+         <element column="zip_code" name="order_id" xsdType="integer"/>
+         <element column="description" name="username" xsdType="string"/>
+      </result>
+   </query>
+   <query id="delete-info" useConfig="sampledb">
+      <sql>delete from Order_Info where order_id=:order_id</sql>
+      <param name="order_id" sqlType="INTEGER"/>
+   </query>
+   <query id="insert-info" useConfig="sampledb">
+      <sql>INSERT INTO Order_Info (customer_id, order_id, zip_code, description) values (?, ?, ?, ?)</sql>
+      <param name="customer_id" sqlType="INTEGER"/>
+      <param name="order_id" sqlType="INTEGER"/>
+      <param name="zip_code" sqlType="INTEGER"/>
+      <param name="description" sqlType="STRING"/>
+   </query>
+   <query id="update-info" useConfig="sampledb">
+      <sql>UPDATE Order_Info SET customer_id = ? , zip_code = ?, description = ? WHERE order_id=:order_id</sql>
+      <param name="customer_id" sqlType="INTEGER"/>
+      <param name="zip_code" sqlType="INTEGER"/>
+      <param name="description" sqlType="STRING"/>
+      <param name="order_id" sqlType="INTEGER"/>
+   </query>
+   <operation name="select-info_operation">
+      <call-query href="select-info">      </call-query>
+   </operation>
+   <operation name="delete-info_operation">
+      <call-query href="delete-info">
+         <with-param name="order_id" query-param="order_id"/>
+      </call-query>
+   </operation>
+   <operation name="insert-info_operation">
+      <call-query href="insert-info">
+         <with-param name="customer_id" query-param="customer_id"/>
+         <with-param name="order_id" query-param="order_id"/>
+         <with-param name="zip_code" query-param="zip_code"/>
+         <with-param name="description" query-param="description"/>
+      </call-query>
+   </operation>
+   <operation name="update-info_operation">
+      <call-query href="update-info">
+         <with-param name="customer_id" query-param="customer_id"/>
+         <with-param name="order_id" query-param="order_id"/>
+         <with-param name="zip_code" query-param="zip_code"/>
+         <with-param name="description" query-param="description"/>
+      </call-query>
+   </operation>
+</data>
+
