@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/sfquery" name="sfquery" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" url-mapping="/select">
+        <inSequence>
+            <salesforce.getUserInfo configKey="MySFConfig"/>
+            <property name="SFQuery" scope="default" type="STRING" value="Select u.Username, u.ProfileId, u.Name, u.LastName, u.Email From User u where Username = 'prabushis@wso2.com'"/>
+            <salesforce.query configKey="MySFConfig">
+                <batchSize>1</batchSize>
+                <queryString>{$ctx:SFQuery}</queryString>
+            </salesforce.query>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>
